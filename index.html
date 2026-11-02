@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>Modals – Materi Kelas XI Semester 1</title>
+<style>
+:root{--pink:#ff3d8f;--deep:#c2185b;--sak:#ffc2dc;--pale:#fff0f6;--ink:#4a1030;--ok:#14854b;--bad:#d62839}
+*{box-sizing:border-box}
+body{margin:0;font-family:"Trebuchet MS","Segoe UI",system-ui,sans-serif;color:var(--ink);line-height:1.65;overflow-x:hidden}
+#bg{position:fixed;inset:0;z-index:-3;background:linear-gradient(160deg,#ffd9ea,#ff9ec9 55%,#ff63ab)}
+#sw{position:fixed;z-index:-2;width:130vmax;height:130vmax;left:50%;top:50%;margin:-65vmax 0 0 -65vmax;opacity:.38;background-size:contain;animation:spin 140s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.p{position:fixed;top:-30px;z-index:-1;width:14px;height:14px;background:#fff;opacity:.85;border-radius:100% 0 100% 0;animation:fall linear infinite}
+@keyframes fall{to{transform:translate(80px,110vh) rotate(540deg)}}
+@media(prefers-reduced-motion:reduce){#sw,.p{animation:none}.p{display:none}}
+header{text-align:center;padding:44px 16px 16px}
+h1{font-family:Impact,"Arial Black",sans-serif;font-weight:900;font-size:clamp(3.2rem,14vw,6.5rem);line-height:1;margin:0;color:#fff;letter-spacing:.05em;text-shadow:0 4px 0 var(--deep),0 12px 26px rgba(194,24,91,.5)}
+header p{margin:10px 0 0;color:#fff;font-weight:700;text-shadow:0 2px 6px rgba(194,24,91,.6)}
+nav{position:sticky;top:0;z-index:5;display:flex;gap:10px;justify-content:center;padding:12px}
+nav button{font:inherit;font-weight:700;border:2px solid #fff;background:rgba(255,255,255,.6);color:var(--deep);padding:8px 26px;border-radius:99px;cursor:pointer}
+nav button.on{background:var(--pink);color:#fff;box-shadow:0 4px 14px rgba(194,24,91,.45)}
+main{max-width:860px;margin:0 auto;padding:0 14px 60px}
+.c{background:rgba(255,255,255,.9);border:2px solid #fff;border-radius:20px;padding:20px 22px;margin:16px 0;box-shadow:0 8px 24px rgba(194,24,91,.2)}
+h2{margin:0 0 10px;font-size:1.3rem;color:var(--deep);border-left:8px solid var(--pink);padding-left:12px}
+h3{margin:16px 0 4px;color:var(--deep)}
+p{margin:6px 0}
+.id{color:#7a3a5a;font-style:italic}
+ul{margin:6px 0;padding-left:22px}
+.tw{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:480px}
+th{background:var(--pink);color:#fff;text-align:left}
+th,td{padding:8px 12px;border-bottom:1px solid var(--sak)}
+tr:nth-child(even) td{background:var(--pale)}
+.pat{background:var(--pale);border-radius:14px;padding:12px 16px;margin:10px 0;border:2px dashed var(--pink)}
+.pat b{color:var(--deep)}
+.note{background:#fff3c4;border-left:6px solid #f2a900;border-radius:10px;padding:10px 14px;margin:12px 0}
+.ok{color:var(--ok);font-weight:700}.no{color:var(--bad);font-weight:700}
+.g3{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.g3>div{background:var(--pale);border-radius:14px;padding:12px 14px;border-top:6px solid var(--pink)}
+.g3 h3{margin-top:0}
+.q{margin:14px 0}
+.opts{display:grid;gap:6px;margin-top:6px}
+.opt{font:inherit;text-align:left;border:2px solid var(--sak);background:#fff;border-radius:12px;padding:8px 12px;cursor:pointer;color:var(--ink)}
+.opt:hover:not(:disabled){border-color:var(--pink);background:var(--pale)}
+.opt.right{background:#d8f5e5;border-color:var(--ok)}
+.opt.wrong{background:#ffd9de;border-color:var(--bad)}
+.opt:disabled{cursor:default}
+ol{padding-left:24px}
+ol li{margin:12px 0}
+input,select{font:inherit;border:2px solid var(--sak);border-radius:10px;padding:4px 10px;color:var(--ink);background:#fff;max-width:100%}
+input{width:150px}input.w{display:block;width:100%;margin-top:4px}
+input.right,select.right{border-color:var(--ok);background:#e6f8ee}
+input.wrong,select.wrong{border-color:var(--bad);background:#ffe9ec}
+.fb{display:block;font-size:.9rem;font-weight:700}
+.bar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.btn{font:inherit;font-weight:700;border:0;border-radius:99px;padding:8px 22px;cursor:pointer;background:var(--pink);color:#fff}
+.btn.ghost{background:#fff;color:var(--deep);border:2px solid var(--pink)}
+.sc{font-weight:700;color:var(--deep)}
+.bad{color:var(--bad)}
+.opt.sel{background:#ffd3e6;border-color:var(--pink)}
+.opt.right{background:#d8f5e5;border-color:var(--ok)}
+.opt.wrong{background:#ffd9de;border-color:var(--bad)}
+.frm{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px}
+.frm label{display:block;font-weight:700}
+.frm input,.frm select{display:block;width:100%;margin-top:4px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.stick{position:sticky;bottom:10px;z-index:6;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;padding:12px 18px}
+.big{font-family:Impact,"Arial Black",sans-serif;font-size:4.2rem;line-height:1;color:var(--pink);text-shadow:0 3px 0 var(--sak)}
+.pill{display:inline-block;font-weight:700;border-radius:99px;padding:3px 14px;color:#fff}
+.pill.ok{background:var(--ok)}.pill.wa{background:#b86e00}.pill.no{background:var(--bad)}
+#ms{color:var(--bad);font-weight:700;margin-left:8px}
+#hasil td:first-child{font-weight:700;width:42%}
+@media print{#bg,#sw,.p,header,nav,footer,.stick,.noprint,main>section:not(#latihan),#latihan>.c:not(#hasil){display:none!important}body{background:#fff}#hasil{box-shadow:none;border:0}}
+:focus-visible{outline:3px solid var(--deep);outline-offset:2px}
+footer{text-align:center;color:#fff;font-weight:700;padding:10px;text-shadow:0 2px 6px rgba(194,24,91,.6)}
+</style>
+</head>
+<body>
+<div id="bg"></div><div id="sw" aria-hidden="true"></div>
+<header>
+  <h1>MODALS</h1>
+  <p>Modal Auxiliary Verbs</p>
+  <p>Materi Kelas XI Semester 1</p>
+</header>
+<nav aria-label="Menu">
+  <button class="on" data-t="materi">Materi</button>
+  <button data-t="latihan">Latihan</button>
+</nav>
+<main>
+
+<section id="materi">
+  <div class="c"><h2>1. Pengertian (Definition)</h2>
+    <p>Modals are auxiliary verbs used to express ability, permission, possibility, advice, obligation, prohibition, and requests.</p>
+    <p class="id">Modals adalah kata kerja bantu yang digunakan untuk menyatakan kemampuan, izin, kemungkinan, saran, kewajiban, larangan, dan permintaan.</p>
+    <p>Contoh modal verbs: <b>can, could, may, might, must, should, will,</b> dan <b>would</b>.</p>
+  </div>
+
+  <div class="c"><h2>2. Fungsi modals (Functions)</h2>
+    <div class="tw"><table>
+      <tr><th>Modal</th><th>Fungsi</th><th>Example</th></tr>
+      <tr><td><b>Can</b></td><td>Kemampuan / izin</td><td>I can operate this machine.</td></tr>
+      <tr><td><b>Could</b></td><td>Kemampuan lampau / permintaan sopan</td><td>Could you help me?</td></tr>
+      <tr><td><b>May</b></td><td>Meminta izin / kemungkinan</td><td>May I enter the room?</td></tr>
+      <tr><td><b>Might</b></td><td>Kemungkinan</td><td>It might rain today.</td></tr>
+      <tr><td><b>Must</b></td><td>Kewajiban kuat</td><td>Students must wear safety equipment.</td></tr>
+      <tr><td><b>Should</b></td><td>Saran</td><td>You should check the equipment.</td></tr>
+      <tr><td><b>Will</b></td><td>Masa depan / kesediaan</td><td>I will finish the task.</td></tr>
+      <tr><td><b>Would</b></td><td>Permintaan sopan / situasi hipotetis</td><td>Would you open the door?</td></tr>
+      <tr><td><b>Have to</b></td><td>Keharusan</td><td>Workers have to follow safety rules.</td></tr>
+      <tr><td><b>Must not</b></td><td>Larangan</td><td>You must not touch live wires.</td></tr>
+    </table></div>
+  </div>
+
+  <div class="c"><h2>3. Pola kalimat (Sentence patterns)</h2>
+    <div class="pat"><b>A. Positive (kalimat positif)</b><br>Subject + Modal + Verb 1 + Object
+      <ul><li>I can repair the device.</li><li>Workers must wear helmets.</li><li>Students should read the instructions.</li><li>We will finish the project tomorrow.</li></ul>
+      <p class="id">Artinya: Saya bisa memperbaiki perangkat tersebut. Pekerja harus memakai helm. Siswa sebaiknya membaca petunjuk. Kami akan menyelesaikan proyek besok.</p>
+    </div>
+    <div class="note"><b>Important:</b> Setelah modal, gunakan Verb 1 tanpa <i>to</i>.<br>
+      <span class="ok">Correct:</span> She can operate the machine.<br>
+      <span class="no">Incorrect:</span> She can operates the machine.</div>
+    <div class="pat"><b>B. Negative (kalimat negatif)</b><br>Subject + Modal + not + Verb 1
+      <ul><li>I cannot operate the machine.</li><li>You should not ignore the instructions.</li><li>Workers must not enter this area.</li><li>He will not come tomorrow.</li></ul>
+      <p class="id">Bentuk singkat yang umum: can’t, shouldn’t, mustn’t, dan won’t.</p>
+    </div>
+    <div class="pat"><b>C. Interrogative (kalimat tanya)</b><br>Modal + Subject + Verb 1 + Object?
+      <ul><li>Can you repair this computer?</li><li>May I borrow your book?</li><li>Should we check the equipment?</li><li>Could you explain the procedure?</li></ul>
+      <p class="id">Jawaban singkat:</p>
+      <ul><li>Yes, I can. / No, I can’t.</li><li>Yes, you may. / No, you may not.</li><li>Yes, we should. / No, we shouldn’t.</li></ul>
+    </div>
+  </div>
+
+  <div class="c"><h2>4. Penjelasan dan contoh</h2>
+    <h3>A. Can and could</h3>
+    <p class="id">Digunakan untuk menyatakan kemampuan atau meminta bantuan dengan sopan.</p>
+    <ul><li>I can use a digital measuring instrument.<br><span class="id">Saya bisa menggunakan alat ukur digital.</span></li>
+    <li>He could swim when he was five.<br><span class="id">Dia bisa berenang ketika berusia lima tahun.</span></li>
+    <li>Could you help me with this project?<br><span class="id">Bisakah Anda membantu saya mengerjakan proyek ini?</span></li></ul>
+    <h3>B. May and might</h3>
+    <p class="id">Digunakan untuk meminta izin atau menyatakan kemungkinan.</p>
+    <ul><li>May I use this computer?<br><span class="id">Bolehkah saya menggunakan komputer ini?</span></li>
+    <li>It may rain this afternoon.<br><span class="id">Mungkin akan turun hujan sore ini.</span></li>
+    <li>The machine might stop if it overheats.<br><span class="id">Mesin itu mungkin berhenti jika terlalu panas.</span></li></ul>
+    <h3>C. Must and have to</h3>
+    <p class="id">Digunakan untuk menyatakan kewajiban atau keharusan.</p>
+    <ul><li>Students must follow laboratory safety rules.<br><span class="id">Siswa harus mengikuti aturan keselamatan laboratorium.</span></li>
+    <li>Workers have to wear protective equipment.<br><span class="id">Pekerja harus memakai alat pelindung.</span></li></ul>
+    <h3>D. Should</h3>
+    <p class="id">Digunakan untuk memberikan saran atau rekomendasi.</p>
+    <ul><li>You should save your work regularly.<br><span class="id">Kamu sebaiknya menyimpan pekerjaan secara berkala.</span></li>
+    <li>We should recycle plastic waste.<br><span class="id">Kita sebaiknya mendaur ulang sampah plastik.</span></li>
+    <li>Technicians should inspect the equipment before use.<br><span class="id">Teknisi sebaiknya memeriksa peralatan sebelum digunakan.</span></li></ul>
+    <h3>E. Will and would</h3>
+    <p class="id"><i>Will</i> digunakan untuk menyatakan masa depan atau kesediaan.</p>
+    <ul><li>I will complete the report tomorrow.</li><li>We will help you with the project.</li></ul>
+    <p class="id"><i>Would</i> dapat digunakan untuk permintaan yang lebih sopan.</p>
+    <ul><li>Would you help me, please?</li><li>Would you explain this instruction again?</li></ul>
+  </div>
+
+  <div class="c"><h2>5. Perbedaan penting (Important differences)</h2>
+    <p class="id">Perhatikan perbedaan makna berikut karena sering muncul dalam soal Bahasa Inggris.</p>
+    <div class="tw"><table>
+      <tr><th>Expression</th><th>Meaning</th><th>Example</th></tr>
+      <tr><td><b>Must</b></td><td>Harus; kewajiban kuat</td><td>You must wear a helmet.</td></tr>
+      <tr><td><b>Must not</b></td><td>Dilarang</td><td>You must not touch the wires.</td></tr>
+      <tr><td><b>Should</b></td><td>Sebaiknya; saran</td><td>You should check the wires.</td></tr>
+      <tr><td><b>Do not have to</b></td><td>Tidak harus; tidak wajib</td><td>You do not have to come early.</td></tr>
+      <tr><td><b>Can</b></td><td>Bisa; mampu</td><td>She can use the software.</td></tr>
+      <tr><td><b>May</b></td><td>Boleh; meminta izin</td><td>May I come in?</td></tr>
+    </table></div>
+    <div class="note"><b>Perhatian:</b> <i>Must not</i> berarti dilarang, sedangkan <i>do not have to</i> berarti tidak wajib. Keduanya tidak sama.</div>
+  </div>
+
+  <div class="c"><h2>6. Contoh di lingkungan SMK</h2>
+    <div class="g3">
+      <div><h3>Electrical Engineering (TITL)</h3><ul>
+        <li>Students must switch off the power before inspection.</li>
+        <li>You must not touch exposed electrical wires.</li>
+        <li>Technicians should check the circuit carefully.</li></ul></div>
+      <div><h3>Geomatic Engineering (Geomatika)</h3><ul>
+        <li>Surveyors can use GPS to determine positions.</li>
+        <li>Students should record the measurement results accurately.</li>
+        <li>We must protect surveying equipment from damage.</li></ul></div>
+      <div><h3>HVAC Engineering (TPTU)</h3><ul>
+        <li>Technicians must follow safety procedures.</li>
+        <li>You should inspect the equipment before use.</li>
+        <li>Workers must not operate damaged equipment.</li></ul></div>
+    </div>
+  </div>
+
+  <div class="c"><h2>7. Kesimpulan (Summary)</h2>
+    <ul>
+      <li>Modals adalah kata kerja bantu yang menyatakan kemampuan, izin, kemungkinan, saran, kewajiban, atau permintaan.</li>
+      <li>Pola positif: Subject + Modal + Verb 1.</li>
+      <li>Pola negatif: Subject + Modal + not + Verb 1.</li>
+      <li>Pola tanya: Modal + Subject + Verb 1?</li>
+      <li>Setelah modal, kata kerja tidak menggunakan -s/-es dan umumnya tidak menggunakan <i>to</i>.</li>
+    </ul>
+    <div class="note"><b>Remember:</b> can = bisa, may = boleh/mungkin, must = harus, must not = dilarang, should = sebaiknya, dan will = akan.</div>
+  </div>
+</section>
+
+<section id="latihan" hidden>
+  <div class="c"><h2>Learning objectives</h2>
+    <p>Students are able to:</p>
+    <ul><li>Identify the functions of modal verbs.</li><li>Complete sentences using appropriate modals.</li><li>Use modals in daily and vocational situations.</li></ul>
+    <p class="id">Jawabanmu tidak disimpan atau dikirim ke mana pun. Halaman ini hanya memeriksa jawaban di perangkatmu.</p>
+  </div>
+
+  <div class="c"><h2>Data siswa</h2>
+    <div class="frm">
+      <label>Nama<input id="nm" maxlength="60" autocomplete="off"></label>
+      <label>Kelas<input id="kl" maxlength="20" autocomplete="off"></label>
+      <label>Program keahlian<select id="pj"><option>TITL</option><option>Geomatika</option><option>TPTU</option></select></label>
+    </div>
+    <p class="id">Kerjakan semua soal, lalu tekan Kirim Jawaban &amp; Lihat Nilai di bagian bawah layar. Nilai langsung muncul di sini.</p>
+  </div>
+  <div class="c" id="hasil" hidden></div>
+
+  <div class="c"><h2>Task 1: Choose the correct answer</h2>
+    <p>Choose A, B, C, or D.</p>
+    <div id="t1"></div>
+  </div>
+
+  <div class="c"><h2>Task 2: Complete the sentences</h2>
+    <p>Use: <b>can, may, must, must not, should, might, will, could, do not have to, have to</b></p>
+    <ol id="t2"></ol>
+  </div>
+
+  <div class="c"><h2>Task 3: Identify the function</h2>
+    <p>Choose the correct function of the modal in each sentence.</p>
+    <ol id="t3"></ol>
+  </div>
+
+  <div class="c"><h2>Task 4: Correct the mistakes</h2>
+    <p>Rewrite each sentence correctly.</p>
+    <ol id="t4"></ol>
+  </div>
+
+  <div class="c"><h2>Task 5: Writing practice</h2>
+    <p>Complete the sentences with your own ideas. Tulis di buku tugasmu, lalu tunjukkan kepada gurumu.</p>
+    <ul>
+      <li>Students should ______________________.</li>
+      <li>We must ______________________.</li>
+      <li>We must not ______________________.</li>
+      <li>I can ______________________.</li>
+      <li>In the workshop, technicians have to ______________________.</li>
+    </ul>
+    <h3>Reflection</h3>
+    <ul>
+      <li>Today, I learned that modals are used to ______________________.</li>
+      <li>The modal I understand best is ______________________.</li>
+      <li>One example of a modal sentence is ______________________.</li>
+    </ul>
+  </div>
+  <div class="c stick" id="bx"><span><b id="pg"></b><span id="ms"></span></span>
+    <span class="row"><button class="btn" id="sb">Kirim Jawaban &amp; Lihat Nilai</button><button class="btn ghost" id="rs">Ulangi semua</button></span></div>
+</section>
+</main>
+<footer>Good work! Check your answers before submitting your LKPD.</footer>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>document.querySelectorAll(s);
+
+// Spiral Uzumaki sebagai latar
+(function(){let d='M200 200';for(let t=0;t<62;t+=.12){const r=3.2*t;d+='L'+(200+r*Math.cos(t)).toFixed(1)+' '+(200+r*Math.sin(t)).toFixed(1)}
+const svg='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400"><path d="'+d+'" fill="none" stroke="#fff" stroke-width="8" stroke-linecap="round"/></svg>';
+$('#sw').style.backgroundImage='url("data:image/svg+xml,'+encodeURIComponent(svg)+'")'})();
+
+// Kelopak sakura
+for(let i=0;i<14;i++){const p=document.createElement('span');p.className='p';p.style.left=Math.random()*100+'vw';p.style.animationDuration=(9+Math.random()*9)+'s';p.style.animationDelay=(-Math.random()*16)+'s';p.style.transform='scale('+(.6+Math.random()*.9)+')';document.body.appendChild(p)}
+
+// Tab
+$$('nav button').forEach(b=>b.onclick=()=>{$$('nav button').forEach(x=>x.classList.toggle('on',x===b));$$('main>section').forEach(s=>s.hidden=s.id!==b.dataset.t);scrollTo({top:0})});
+
+const norm=s=>s.toLowerCase().replace(/[’‘]/g,"'").replace(/[.!]+$/,'').replace(/\s+/g,' ').trim();
+
+// Penilaian
+const pred=n=>n>=85?'Sangat Baik':n>=70?'Baik':n>=55?'Cukup':'Perlu Remedial';
+const pcls=n=>n>=70?'ok':n>=55?'wa':'no';
+const esc=s=>s.replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const T1=[
+['Students _____ wear safety equipment in the laboratory.',['can to','must','should to','must to'],1],
+['You _____ touch exposed electrical wires. It is dangerous.',['must not','should','can','may'],0],
+['_____ I borrow your dictionary, please?',['Must','Should','May','Have'],2],
+['A skilled technician _____ repair this simple device.',['can','can to','cans','is can'],0],
+['You look tired. You _____ take a short rest.',['must not','should','may not','cannot'],1],
+['The sky is very dark. It _____ rain soon.',['must not','should to','might','can to'],2],
+['_____ you help me carry these books, please?',['Could','Must','Have','Should to'],0],
+['We _____ submit the report tomorrow. The deadline is Friday.',['must not','will','cannot','might not'],1],
+['You _____ bring a laptop if the teacher provides computers for everyone. It is optional.',['must','must not','do not have to','should'],2],
+['Which sentence is grammatically correct?',['She can operates the machine.','She can to operate the machine.','She can operating the machine.','She can operate the machine.'],3]];
+const F=['Ability','Permission','Advice','Obligation','Prohibition','Possibility','Polite Request','Future'];
+const S={
+t2:[
+['Students ','follow the laboratory safety rules.',['must','have to']],
+['You ','touch the hot surface because it may cause burns.',['must not']],
+['','I enter the classroom, Sir?',['may']],
+['You have a headache. You ','get some rest.',['should']],
+['A GPS receiver ','help surveyors determine positions.',['can']],
+['The machine ','stop if it becomes too hot.',['might','may']],
+['I ','finish this assignment tomorrow.',['will']],
+['','you explain this instruction again, please?',['could','would','can']],
+['We ','attend the extra session if it is optional.',['do not have to',"don't have to"]],
+['All students ','wear their school uniforms on Monday according to school rules.',['have to','must']]],
+t3:[
+['She can use the computer software.',0],['You should check your answers before submitting them.',2],
+['Workers must wear protective equipment.',3],['May I use your ruler?',1],
+['You must not enter the restricted area.',4],['It might rain this afternoon.',5],
+['I will send the report tomorrow.',7],['Could you help me with this task?',6]],
+t4:[
+['He can repairs the computer.','He can repair the computer.'],
+['Students must to wear safety shoes.','Students must wear safety shoes.'],
+['You should checks the equipment before using it.','You should check the equipment before using it.'],
+['She cans operate the machine.','She can operate the machine.'],
+['They must not to enter the room.','They must not enter the room.']]};
+const TT={t2:'Task 2: Complete the sentences',t3:'Task 3: Identify the function',t4:'Task 4: Correct the mistakes'};
+const TOTAL=T1.length+S.t2.length+S.t3.length+S.t4.length;
+let a1={},done=false,force=false;
+
+function r1(){$('#t1').innerHTML=T1.map((q,i)=>'<div class="q"><b>'+(i+1)+'.</b> '+q[0]+'<div class="opts">'+q[1].map((o,j)=>'<button class="opt" data-i="'+i+'" data-j="'+j+'">'+'ABCD'[j]+'. '+o+'</button>').join('')+'</div></div>').join('')}
+$('#t1').onclick=e=>{const b=e.target.closest('.opt');if(!b||done)return;a1[+b.dataset.i]=+b.dataset.j;b.parentNode.querySelectorAll('.opt').forEach(x=>x.classList.toggle('sel',x===b));upd()};
+function build(id){const el=$('#'+id);
+if(id==='t2')el.innerHTML=S.t2.map(r=>'<li>'+r[0]+'<input aria-label="jawaban" autocomplete="off" spellcheck="false"> '+r[1]+'<span class="fb"></span></li>').join('');
+if(id==='t3')el.innerHTML=S.t3.map(r=>'<li>'+r[0]+'<br><select><option value="">Pilih function…</option>'+F.map(f=>'<option>'+f+'</option>').join('')+'</select><span class="fb"></span></li>').join('');
+if(id==='t4')el.innerHTML=S.t4.map(r=>'<li><span class="bad">'+r[0]+'</span><input class="w" aria-label="kalimat benar" autocomplete="off" spellcheck="false"><span class="fb"></span></li>').join('')}
+function answered(){let n=Object.keys(a1).length;$$('#t2 input,#t3 select,#t4 input').forEach(f=>{if(f.value.trim())n++});return n}
+function msg(t){$('#ms').textContent=t}
+function upd(){$('#pg').textContent='Terjawab '+answered()+' / '+TOTAL;if(!done){force=false;$('#sb').textContent='Kirim Jawaban & Lihat Nilai';msg('')}}
+function grade(id){const lis=$$('#'+id+' li');let n=0;
+lis.forEach((li,i)=>{const f=li.querySelector('input,select'),v=norm(f.value);let ans,ok;
+if(id==='t2'){ans=S.t2[i][2];ok=ans.includes(v)}
+else if(id==='t3'){ans=[F[S.t3[i][1]]];ok=v===norm(ans[0])}
+else{ans=[S.t4[i][1]];ok=v===norm(ans[0])}
+f.disabled=true;f.classList.add(ok?'right':'wrong');if(ok)n++;
+const fb=li.querySelector('.fb');fb.className='fb '+(ok?'ok':'no');fb.textContent=ok?'Benar':'Jawaban: '+ans.join(' / ')});return n}
+function sub(){if(done)return;
+const nm=$('#nm'),kl=$('#kl');
+if(!nm.value.trim()||!kl.value.trim()){(nm.value.trim()?kl:nm).focus();nm.scrollIntoView({behavior:'smooth',block:'center'});msg('Isi nama dan kelas dulu.');return}
+const n=answered();
+if(n<TOTAL&&!force){force=true;msg((TOTAL-n)+' soal belum dijawab. Tekan "Kirim Sekarang" untuk tetap mengirim.');$('#sb').textContent='Kirim Sekarang';return}
+done=true;
+let c1=0;$$('#t1 .q').forEach((q,i)=>{q.querySelectorAll('.opt').forEach(x=>{x.disabled=true;x.classList.remove('sel');const j=+x.dataset.j;if(j===T1[i][2])x.classList.add('right');else if(j===a1[i])x.classList.add('wrong')});if(a1[i]===T1[i][2])c1++});
+const R=[['Task 1: Choose the correct answer',c1,T1.length]];
+['t2','t3','t4'].forEach(id=>R.push([TT[id],grade(id),S[id].length]));
+const ok=R.reduce((s,r)=>s+r[1],0),nilai=Math.round(ok/TOTAL*100);
+[nm,kl,$('#pj')].forEach(x=>x.disabled=true);
+const h=$('#hasil');h.hidden=false;
+h.innerHTML='<h2>Hasil latihan modals</h2><div class="tw"><table><tr><td>Nama</td><td>'+esc(nm.value.trim())+'</td></tr><tr><td>Kelas</td><td>'+esc(kl.value.trim())+'</td></tr><tr><td>Program keahlian</td><td>'+esc($('#pj').value)+'</td></tr><tr><td>Waktu pengiriman</td><td>'+new Date().toLocaleString('id-ID')+'</td></tr></table></div>'+
+'<div class="big">'+nilai+'</div><span class="pill '+pcls(nilai)+'">'+pred(nilai)+'</span> <span class="pill '+(nilai>=70?'ok':'no')+'">'+(nilai>=70?'Tuntas':'Belum tuntas')+'</span>'+
+'<p>Benar '+ok+' dari '+TOTAL+' soal. Nilai = benar ÷ '+TOTAL+' × 100 (KKM 70).</p>'+
+'<div class="tw"><table><tr><th>Bagian</th><th>Benar</th></tr>'+R.map(r=>'<tr><td>'+r[0]+'</td><td>'+r[1]+' / '+r[2]+'</td></tr>').join('')+'</table></div>'+
+'<p class="id">Task 5 dan Reflection tidak dinilai otomatis; guru yang memeriksanya. Jawaban benar dan salah ditandai pada setiap soal di bawah.</p>'+
+'<div class="row noprint"><button class="btn" id="pr">Cetak hasil</button></div>';
+$('#pr').onclick=()=>{try{print()}catch(e){}};
+$('#sb').disabled=true;msg('');$('#pg').textContent='Terkirim. Nilai kamu '+nilai+'.';
+h.scrollIntoView({behavior:'smooth',block:'start'})}
+function reset(){done=false;force=false;a1={};r1();['t2','t3','t4'].forEach(build);const h=$('#hasil');h.hidden=true;h.innerHTML='';$('#sb').disabled=false;[$('#nm'),$('#kl'),$('#pj')].forEach(x=>x.disabled=false);upd()}
+$('#sb').onclick=sub;$('#rs').onclick=reset;
+$('#latihan').addEventListener('input',upd);$('#latihan').addEventListener('change',upd);
+reset();
+</script>
+</body>
+</html>
